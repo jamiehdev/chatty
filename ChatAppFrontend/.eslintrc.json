@@ -1,0 +1,19 @@
+{
+    "env": {
+        "browser": true,
+        "es2021": true,
+        "node": true
+    },
+    "extends": "standard-with-typescript",
+    "parserOptions": {
+        "ecmaVersion": "latest",
+        "sourceType": "module"
+    },
+    "rules": {
+        "@typescript-eslint/semi": "off", // Disabling the TypeScript ESLint rule
+        "semi": [
+            "error",
+            "always"
+        ] // Using the core ESLint rule
+    }
+}
