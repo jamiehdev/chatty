@@ -1,0 +1,4 @@
+# General rules that apply to the whole monorepo
+.DS_Store
+node_modules/
+.env

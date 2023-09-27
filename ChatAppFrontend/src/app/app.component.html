@@ -1,9 +1,39 @@
-<div class="chat-box">
-  <div *ngFor="let msg of messages">
-    <strong>{{ msg.user }}:</strong> {{ msg.message }}
+<div class="h-screen flex flex-col">
+  <header class="absolute top-0 left-0 w-full bg-gray-800 text-white p-4">
+    <div class="container mx-auto flex justify-between items-center">
+      <div class="text-2xl font-semibold">
+        Chatty
+      </div>
+      <nav>
+        <a class="hover:underline" routerLink="/create-account">Create Account</a>
+        <a class="hover:underline" routerLink="/login-account">Login</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Content -->
+  <div class="flex-1 flex items-center justify-center">
+    <ng-container *ngIf="authService.isLoggedIn() && !isOnCreateOrLoginPage(); else notLoggedIn">
+      <div class="chat-box bg-white p-4 rounded shadow-md max-w-md w-full">
+        <div *ngFor="let msg of messages" class="mb-2">
+          <strong>{{ msg.user }}:</strong> {{ msg.message }}
+        </div>
+        <input *ngIf="authService.isLoggedIn()" class="w-full p-2 border rounded mb-2" [value]="authService.getUsername()" placeholder="Enter your name" readonly>
+        <input class="w-full p-2 border rounded mb-2" [(ngModel)]="currentMessage" placeholder="Type a message">
+        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          (click)="sendMessage()">Send</button>
+      </div>
+    </ng-container>
+
+    <ng-template #notLoggedIn>
+      <div *ngIf="!isOnCreateOrLoginPage()" class="text-center text-gray-700">
+        <p>You need to <a routerLink="/create-account" class="text-blue-500 underline">create an account</a> or login to
+          use this service.</p>
+      </div>
+    </ng-template>
   </div>
+
+  <router-outlet></router-outlet>
 </div>
 
-<input [(ngModel)]="currentUser" placeholder="Enter your name">
-<input [(ngModel)]="currentMessage" placeholder="Type a message">
-<button (click)="sendMessage()">Send</button>
+

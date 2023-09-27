@@ -1,0 +1,7 @@
+# Backend-specific rules
+bin/
+obj/
+.vs/
+*.user
+*.suo
+*.userosscache
