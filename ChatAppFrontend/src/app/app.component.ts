@@ -2,6 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ChatService } from './services/chat.service';
 import { AuthService } from './services/auth.service';
+import { StateService } from './services/state.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -16,6 +17,7 @@ export class AppComponent implements OnInit {
   constructor (
     private readonly chatService: ChatService,
     public authService: AuthService,
+    public stateService: StateService,
     private readonly router: Router) {}
 
   ngOnInit (): void {
@@ -30,11 +32,7 @@ export class AppComponent implements OnInit {
     const currentUser = this.authService.getUsername();
     if (currentUser !== null && currentUser.trim() !== '' && this.currentMessage.trim() !== '') {
       this.chatService.sendChatMessage(currentUser, this.currentMessage);
-      this.currentMessage = ''; // Clear the input field
+      this.currentMessage = '';
     }
-  }
-
-  isOnCreateOrLoginPage (): boolean {
-    return ['/create-account', '/login-account'].includes(this.router.url);
   }
 }

@@ -2,6 +2,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AccountService } from '../services/account.service';
+import { StateService } from '../services/state.service';
 
 @Component({
   selector: 'app-create-account',
@@ -13,7 +14,7 @@ export class CreateAccountComponent {
   loginError: string = '';
   loginSuccess: string = '';
 
-  constructor (private readonly fb: FormBuilder, private readonly accountService: AccountService) {
+  constructor (private readonly fb: FormBuilder, private readonly accountService: AccountService, public stateService: StateService) {
     this.accountForm = this.fb.group({
       username: ['', Validators.required],
       password: ['', [Validators.required, Validators.minLength(6)]]
