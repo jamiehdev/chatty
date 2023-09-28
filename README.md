@@ -21,6 +21,16 @@ Chatty is a simple yet powerful chat application designed to facilitate real-tim
 
 ## Getting Started
 
+### Cloning the Repository
+
+To get started with Chatty, you need to clone the repository to your local machine. Open a terminal and run the following command:
+
+```sh
+git clone https://github.com/jamiehdev/chatty
+```
+
+This command will clone both the `ChatAppFrontend` and `ChatAppBackend` repositories to your local machine.
+
 ### Prerequisites
 
 - Angular 16
