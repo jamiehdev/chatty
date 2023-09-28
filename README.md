@@ -54,14 +54,46 @@ This command will clone both the `ChatAppFrontend` and `ChatAppBackend` reposito
 ## Running the Application
 
 ### Backend:
-1. Navigate to the `ChatAppBackend` directory.
-2. Run the command `dotnet run` to start the backend server.
+1. **Ensure you have the .NET 7 SDK installed on your machine.**
+   - You can download it from [https://dotnet.microsoft.com/download/dotnet/7.0](https://dotnet.microsoft.com/download/dotnet/7.0).
+   
+2. **Navigate to the `ChatAppBackend` directory.**
+   ```sh
+   cd ChatAppBackend
+   ```
+   
+3. **Install the necessary packages.**
+   ```sh
+   dotnet restore
+   ```
+   
+4. **Run the command to start the backend server.**
+   ```sh
+   dotnet run
+   ```
 
 ### Frontend:
-1. Navigate to the `ChatAppFrontend` directory.
-2. Ensure that Tailwind CSS is properly configured.
-3. Run the command `ng serve` to start the Angular development server.
-4. Open your browser and navigate to [http://localhost:4200/](http://localhost:4200/).
+1. **Navigate to the `ChatAppFrontend` directory.**
+   ```sh
+   cd ChatAppFrontend
+   ```
+   
+2. **Install the necessary packages.**
+   ```sh
+   npm install
+   ```
+   
+3. **Ensure that Tailwind CSS is properly configured.**
+   - Check the `angular.json` and `tailwind.config.js` files are present and properly set up in the repo.
+   - If any discrepancies are found or if Tailwind CSS is not working as expected, refer to the [Tailwind CSS installation and configuration guide for Angular](https://tailwindcss.com/docs/guides/angular).
+   
+4. **Run the command to start the Angular development server.**
+   ```sh
+   ng serve
+   ```
+   
+5. **Open your browser and navigate to the application.**
+   [http://localhost:4200/](http://localhost:4200/)
 
 You should now be able to create an account, log in, and send messages locally.
 
