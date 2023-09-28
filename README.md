@@ -14,7 +14,6 @@ Chatty is a simple yet powerful chat application designed to facilitate real-tim
 ## Future Enhancements
 
 - Implement HTTPS to secure communication and prevent password interception.
-- Display the username of the logged-in user and hide the login and create account options when a user is logged in.
 - Add password confirmation during account creation.
 - Set up email confirmation during user registration.
 - Introduce a forgotten password recovery feature via email.
