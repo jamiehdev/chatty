@@ -4,10 +4,16 @@
       <div class="text-2xl font-semibold">
         Chatty
       </div>
-      <nav>
-        <a class="hover:underline" routerLink="/create-account">Create Account</a>
-        <a class="hover:underline" routerLink="/login-account">Login</a>
+      <nav *ngIf="(username$ | async) as username; else notLoggedInNav">
+        <span>Welcome, {{ username }}</span>
+        <a class="hover:underline" (click)="authService.logout()" routerLink="/login-account">Logout</a>
       </nav>
+      <ng-template #notLoggedInNav>
+        <nav>
+          <a class="hover:underline" routerLink="/create-account">Create Account</a>
+          <a class="hover:underline" routerLink="/login-account">Login</a>
+        </nav>
+      </ng-template>
     </div>
   </header>
 
@@ -18,7 +24,7 @@
         <div *ngFor="let msg of messages" class="mb-2">
           <strong>{{ msg.user }}:</strong> {{ msg.message }}
         </div>
-        <input *ngIf="(stateService.isLoggedIn$ | async)" class="w-full p-2 border rounded mb-2" [value]="authService.getUsername()" placeholder="Enter your name" readonly>
+        <input *ngIf="(stateService.isLoggedIn$ | async)" class="w-full p-2 border rounded mb-2" [value]="(username$ | async)" placeholder="Enter your name" readonly>
         <input class="w-full p-2 border rounded mb-2" [(ngModel)]="currentMessage" placeholder="Type a message">
         <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
           (click)="sendMessage()">Send</button>
@@ -27,8 +33,8 @@
 
     <ng-template #notLoggedIn>
       <div *ngIf="!(stateService.isOnCreateOrLoginPage$ | async)" class="text-center text-gray-700">
-        <p>You need to <a routerLink="/create-account" class="text-blue-500 underline">create an account</a> or login to
-          use this service.</p>
+        <p>You need to <a routerLink="/create-account" class="text-blue-500 underline">create an account</a> or 
+          <a routerLink="/login-account" class="text-blue-500 underline">login</a> to use this service.</p>       
       </div>
     </ng-template>
   </div>

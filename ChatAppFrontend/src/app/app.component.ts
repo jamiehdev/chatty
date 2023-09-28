@@ -4,6 +4,8 @@ import { ChatService } from './services/chat.service';
 import { AuthService } from './services/auth.service';
 import { StateService } from './services/state.service';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -11,6 +13,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
+  username$!: Observable<string | null>;
+
   public messages: Array<{ user: string, message: string }> = [];
   public currentMessage: string = '';
 
@@ -26,6 +30,10 @@ export class AppComponent implements OnInit {
     this.chatService.addTransferChatDataListener((user, message) => {
       this.messages.push({ user, message });
     });
+
+    this.username$ = this.stateService.isLoggedIn$.pipe(
+      map(loggedIn => loggedIn ? this.authService.getUsername() : null)
+    );
   }
 
   sendMessage (): void {

@@ -2,6 +2,12 @@
   <div class="relative w-1/4">
     <form [formGroup]="accountForm" (ngSubmit)="onSubmit()"
       class="mx-auto bg-white p-8 border border-gray-300 rounded-md">
+
+      <!-- Header -->
+      <div class="mb-6">
+        <h2 class="text-2xl font-bold text-center">Sign Up</h2>
+      </div>
+
       <!-- Username Field -->
       <div class="mb-4">
         <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
@@ -24,6 +30,18 @@
         </div>
       </div>
 
+      <!-- Confirm Password Field -->
+      <div class="mb-4">
+        <label for="confirmPassword" class="block text-sm font-medium text-gray-700">Confirm Password</label>
+        <input id="confirmPassword" type="password" formControlName="confirmPassword"
+          class="mt-1 p-2 w-full border rounded-md">
+        <div class="text-red-500 text-xs mt-1 h-4">
+          <ng-container *ngIf="accountForm.errors?.['mismatch'] && accountForm.get('confirmPassword')?.touched">
+            Passwords must match
+          </ng-container>
+        </div>
+      </div>
+
       <!-- Submit Button -->
       <div>
         <button type="submit" [disabled]="accountForm.invalid"
@@ -39,6 +57,10 @@
       class="absolute left-0 right-0 mt-1 bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded-md">
       <p class="font-bold">Success</p>
       <p>{{loginSuccess}}</p>
+      <p class="mt-2">
+        <a href="/login-account" class="text-green-700 underline">Click here</a> to go to the login page or you will be
+        redirected in 5 seconds.
+      </p>
     </div>
 
     <!-- Error Message -->
