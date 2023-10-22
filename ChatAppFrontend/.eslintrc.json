@@ -10,10 +10,16 @@
         "sourceType": "module"
     },
     "rules": {
-        "@typescript-eslint/semi": "off", // Disabling the TypeScript ESLint rule
+        "@typescript-eslint/semi": "off",
+        "@typescript-eslint/consistent-type-imports": "off",
         "semi": [
             "error",
             "always"
-        ] // Using the core ESLint rule
+        ],
+        "@typescript-eslint/space-before-function-paren": ["error", {
+            "anonymous": "always",
+            "named": "never",
+            "asyncArrow": "always"
+        }]
     }
 }

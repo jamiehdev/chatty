@@ -27,7 +27,7 @@ public class ChatHub : Hub
         await Clients.All.SendAsync("ReceiveMessage", user, message);
     }
 
-    public void NotifyBackendOfConnection(string message)
+    public void NotifyBackendOfConnection(string message, string user)
     {
         Console.WriteLine(message);
     }

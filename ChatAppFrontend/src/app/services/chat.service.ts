@@ -8,8 +8,9 @@ import { Injectable } from '@angular/core';
 })
 export class ChatService {
   private hubConnection: signalR.HubConnection | null = null;
+  // private isConnected: boolean = true;
 
-  public async startConnection (): Promise<void> {
+  public async startConnection(): Promise<void> {
     this.hubConnection = new signalR.HubConnectionBuilder()
       .withUrl('http://localhost:5266/chathub')
       .build();
@@ -26,7 +27,7 @@ export class ChatService {
     }
   }
 
-  public addTransferChatDataListener (callback: (user: string, message: string) => void): void {
+  public addTransferChatDataListener(callback: (user: string, message: string) => void): void {
     if (this.hubConnection != null) {
       this.hubConnection.on('ReceiveMessage', callback);
     } else {
@@ -34,7 +35,7 @@ export class ChatService {
     }
   }
 
-  public sendChatMessage (user: string, message: string): void {
+  public sendChatMessage(user: string, message: string): void {
     if (this.hubConnection != null) {
       this.hubConnection.send('SendMessage', user, message)
         .catch(err => { console.error(err); });

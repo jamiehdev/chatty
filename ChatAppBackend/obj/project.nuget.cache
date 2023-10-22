@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "noY9kDh1Yjb+f0sLbEqH8E5tvCFj2qVFCfcdgYrhU+YuRTa/YQfeOFeKrRLUkFkKoeS3jtZSwiC2WaSFQE82tg==",
+  "dgSpecHash": "7sd4vpWBSl2cpU8baw3i2CG7NNNmyz+Bf1rR4GCC9onqShmQnuhIiH3mpbuXzah7TVMk5jsbakrnayQloiRxIg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\J\\chatapp\\ChatAppBackend\\ChatAppBackend.csproj",
+  "projectFilePath": "C:\\dev\\github\\chatapp\\ChatAppBackend\\ChatAppBackend.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\J\\.nuget\\packages\\azure.core\\1.25.0\\azure.core.1.25.0.nupkg.sha512",
     "C:\\Users\\J\\.nuget\\packages\\azure.identity\\1.7.0\\azure.identity.1.7.0.nupkg.sha512",
@@ -39,6 +39,7 @@
     "C:\\Users\\J\\.nuget\\packages\\microsoft.extensions.apidescription.server\\6.0.5\\microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
     "C:\\Users\\J\\.nuget\\packages\\microsoft.extensions.caching.abstractions\\7.0.0\\microsoft.extensions.caching.abstractions.7.0.0.nupkg.sha512",
     "C:\\Users\\J\\.nuget\\packages\\microsoft.extensions.caching.memory\\7.0.0\\microsoft.extensions.caching.memory.7.0.0.nupkg.sha512",
+    "C:\\Users\\J\\.nuget\\packages\\microsoft.extensions.configuration\\7.0.0\\microsoft.extensions.configuration.7.0.0.nupkg.sha512",
     "C:\\Users\\J\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\7.0.0\\microsoft.extensions.configuration.abstractions.7.0.0.nupkg.sha512",
     "C:\\Users\\J\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\7.0.0\\microsoft.extensions.dependencyinjection.7.0.0.nupkg.sha512",
     "C:\\Users\\J\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\7.0.0\\microsoft.extensions.dependencyinjection.abstractions.7.0.0.nupkg.sha512",

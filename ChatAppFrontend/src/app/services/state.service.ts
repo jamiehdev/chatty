@@ -8,15 +8,13 @@ import { filter } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class StateService {
-  private isLoggedInSubject = new BehaviorSubject<boolean>(false);
-  private isOnCreateOrLoginPageSubject = new BehaviorSubject<boolean>(false);
+  private readonly isLoggedInSubject = new BehaviorSubject<boolean>(false);
+  private readonly isOnCreateOrLoginPageSubject = new BehaviorSubject<boolean>(false);
 
   isLoggedIn$ = this.isLoggedInSubject.asObservable();
   isOnCreateOrLoginPage$ = this.isOnCreateOrLoginPageSubject.asObservable();
 
-  constructor(private authService: AuthService, private router: Router) {
-    this.updateState();
-
+  constructor(private readonly authService: AuthService, private readonly router: Router) {
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe(() => {
@@ -25,7 +23,7 @@ export class StateService {
   }
 
   private updateState(): void {
-    this.isLoggedInSubject.next(this.authService.isLoggedIn());
+    this.isLoggedInSubject.next(this.authService.isAuthenticated());
     this.isOnCreateOrLoginPageSubject.next(this.checkIfOnCreateOrLoginPage());
   }
 

@@ -1,28 +1,33 @@
 import { Injectable } from '@angular/core';
+import { JwtHelperService } from '@auth0/angular-jwt';
+
+const TOKEN_KEY = 'token';
+const USERNAME_CLAIM = 'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private readonly USER_KEY = 'user';
+  constructor(private readonly jwtHelper: JwtHelperService) {}
 
-  // Simulate user login
-  login (username: string): void {
-    sessionStorage.setItem(this.USER_KEY, username);
+  public isAuthenticated(): boolean {
+    const token = localStorage.getItem('token');
+
+    return !this.jwtHelper.isTokenExpired(token);
   }
 
-  // Simulate user logout
-  logout (): void {
-    sessionStorage.removeItem(this.USER_KEY);
+  login(token: string): void {
+    localStorage.setItem(TOKEN_KEY, token);
   }
 
-  // Check if the user is logged in
-  isLoggedIn (): boolean {
-    return !(sessionStorage.getItem(this.USER_KEY) == null);
+  logout(): void {
+    localStorage.removeItem(TOKEN_KEY);
   }
 
-  // Get the username of the logged-in user
-  getUsername (): string | null {
-    return sessionStorage.getItem(this.USER_KEY);
+  getUsername(): string | null {
+    const token = localStorage.getItem(TOKEN_KEY);
+    if (token === null || token === '') return null;
+    const decodedToken = this.jwtHelper.decodeToken(token);
+    return decodedToken?.[USERNAME_CLAIM] ?? null;
   }
 }

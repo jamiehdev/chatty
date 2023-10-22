@@ -3,6 +3,10 @@ using ChatApp.Services;
 using ChatApp.Models;
 using ChatApp.Data;
 using System;
+using System.IdentityModel.Tokens.Jwt;
+using Microsoft.IdentityModel.Tokens;
+using System.Security.Claims;
+using System.Text;
 
 namespace ChatApp.Controllers
 {
@@ -12,11 +16,13 @@ namespace ChatApp.Controllers
     {
         private readonly PasswordService _passwordService;
         private readonly AppDbContext _context;
+        private readonly IConfiguration _configuration;
 
-        public AccountsController(PasswordService passwordService, AppDbContext context)
+        public AccountsController(PasswordService passwordService, AppDbContext context, IConfiguration configuration)
         {
             _passwordService = passwordService;
             _context = context;
+            _configuration = configuration;
         }
 
         [HttpPost("create")]
@@ -80,14 +86,36 @@ namespace ChatApp.Controllers
                 // Typically, you would generate a JWT or some other form of token here 
                 // and include it in the response
 
-                return Ok(new { Message = "Logged in successfully" });
+                var token = CreateToken(model);
+
+                return Ok(token);
             }
             catch (Exception ex)
             {
-                // Log the exception
-                // ...
+                Console.WriteLine(ex.ToString());
                 return StatusCode(500, new { Message = "An error occurred while logging in" });
             }
+        }
+
+        private string CreateToken(LoginModel user)
+        {
+            List<Claim> claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.Name, user.Username)
+            };
+
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("YOURSECRETKEY"));
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
+
+            var token = new JwtSecurityToken(
+                    claims: claims,
+                    expires: DateTime.Now.AddDays(1),
+                    signingCredentials: creds
+                );
+
+            var jwt = new JwtSecurityTokenHandler().WriteToken(token);
+
+            return jwt;
         }
     }
 }

@@ -11,6 +11,8 @@ import { CreateAccountComponent } from './create-account/create-account.componen
 import { HttpClientModule } from '@angular/common/http';
 import { LoginAccountComponent } from './login-account/login-account.component';
 
+import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,7 +26,8 @@ import { LoginAccountComponent } from './login-account/login-account.component';
     ReactiveFormsModule,
     HttpClientModule
   ],
-  providers: [ChatService],
+  providers: [ChatService, { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
+    JwtHelperService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

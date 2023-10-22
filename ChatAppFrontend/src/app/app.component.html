@@ -5,7 +5,7 @@
         Chatty
       </div>
       <nav *ngIf="(username$ | async) as username; else notLoggedInNav">
-        <span>Welcome, {{ username }}</span>
+        <span>Welcome, <b>{{ username }}</b></span>
         <a class="hover:underline" (click)="authService.logout()" routerLink="/login-account">Logout</a>
       </nav>
       <ng-template #notLoggedInNav>
@@ -19,25 +19,54 @@
 
   <!-- Content -->
   <div class="flex-1 flex items-center justify-center">
-    <ng-container *ngIf="(stateService.isLoggedIn$ | async) && !(stateService.isOnCreateOrLoginPage$ | async); else notLoggedIn">
+    <ng-container
+      *ngIf="(stateService.isLoggedIn$ | async) && !(stateService.isOnCreateOrLoginPage$ | async); else notLoggedIn">
       <div class="chat-box bg-white p-4 rounded shadow-md max-w-md w-full">
         <div *ngFor="let msg of messages" class="mb-2">
           <strong>{{ msg.user }}:</strong> {{ msg.message }}
         </div>
-        <input *ngIf="(stateService.isLoggedIn$ | async)" class="w-full p-2 border rounded mb-2" [value]="(username$ | async)" placeholder="Enter your name" readonly>
+        <input class="w-full p-2 border rounded mb-2"
+          [value]="(username$ | async)" placeholder="Enter your name" readonly>
         <input class="w-full p-2 border rounded mb-2" [(ngModel)]="currentMessage" placeholder="Type a message">
-        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        <button class="bg-green-700 hover:bg-green-600 text-white font-bold py-2 px-4 rounded"
           (click)="sendMessage()">Send</button>
+        <!-- <button class="bg-blue-500 hover:bg-blue-700 text-white float-right font-bold py-2 px-4 rounded"
+          (click)="openActiveUsersModal()">Active Users</button> -->
       </div>
     </ng-container>
 
     <ng-template #notLoggedIn>
       <div *ngIf="!(stateService.isOnCreateOrLoginPage$ | async)" class="text-center text-gray-700">
-        <p>You need to <a routerLink="/create-account" class="text-blue-500 underline">create an account</a> or 
-          <a routerLink="/login-account" class="text-blue-500 underline">login</a> to use this service.</p>       
+        <p>You need to <a routerLink="/create-account" class="text-blue-500 underline">create an account</a> or
+          <a routerLink="/login-account" class="text-blue-500 underline">login</a> to use this service.
+        </p>
       </div>
     </ng-template>
   </div>
 
   <router-outlet></router-outlet>
 </div>
+
+<!-- <div [ngClass]="{'hidden': !isActiveUsersModalOpen}"
+class="modal fixed inset-0 z-50 overflow-auto bg-gray-500 bg-opacity-75 flex justify-center items-center">
+  <div class="bg-white w-1/4 p-6 rounded-lg">
+    <div class="flex justify-between mb-3">
+      <h3 class="text-lg font-bold">Active Users</h3>
+      <button class="text-gray-700 hover:text-gray-900" (click)="closeActiveUsersModal()">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+    </div>
+    <hr class="mb-3">
+    <div class="modal-body">
+      <ul class="border border-gray-300 rounded p-4">
+        <li class="flex justify-between items-center py-2">
+          <span class="text-md font-semibold">Member 1</span>
+          <p class="text-sm text-zinc-600">last active 1 minute ago</p>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div> -->

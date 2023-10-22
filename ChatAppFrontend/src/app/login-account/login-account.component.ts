@@ -12,51 +12,53 @@ import { AuthService } from '../services/auth.service';
 })
 export class LoginAccountComponent implements OnInit {
   loginForm: FormGroup;
-  loginSuccess: string | null = null;
-  loginError: string | null = null;
+  loginSuccess: string = '';
+  loginError: string = '';
 
-  constructor (private readonly fb: FormBuilder, private readonly accountsService: AccountService, private readonly router: Router, private readonly authService: AuthService) {
+  constructor(private readonly fb: FormBuilder, private readonly accountsService: AccountService, private readonly router: Router, private readonly authService: AuthService) {
     this.loginForm = this.fb.group({
       username: ['', Validators.required],
       password: ['', Validators.required]
     });
   }
 
-  ngOnInit (): void {
+  ngOnInit(): void {
   }
 
-  async onSubmit (): Promise<void> {
+  onSubmit(): void {
     if (this.loginForm.valid) {
       const username = this.loginForm.value.username;
       const password = this.loginForm.value.password;
 
-      try {
-        const response = await this.accountsService.loginAccount(username, password).toPromise();
+      this.accountsService.loginAccount(username, password).subscribe({
+        next: response => {
+          this.loginSuccess = 'Successfully logged in!';
+          this.loginError = '';
 
-        console.log('Login successful', response);
-        this.loginSuccess = response.message;
-        this.loginError = null;
+          this.authService.login(response);
+          setTimeout(() => {
+            this.router.navigate(['/']).then(success => {
+              if (!success) {
+                console.log('Navigation failed');
+              }
+            }).catch(error => {
+              console.error('Navigation error', error);
+            });
+          }, 5000);
+        },
+        error: error => {
+          console.error('Login error', error);
 
-        this.authService.login(username);
+          try {
+            const errorObject = JSON.parse(error.error);
+            this.loginError = errorObject.message ?? 'An unknown error occurred';
+          } catch {
+            this.loginError = 'An unknown error occurred';
+          }
 
-        await new Promise(resolve => setTimeout(resolve, 5000));
-
-        await this.router.navigate(['/']);
-      } catch (error) {
-        console.error('Login error', error);
-
-        // Type checking or type assertion to access properties safely
-        if (error instanceof Error) {
-          this.loginError = error.message;
-        } else if (typeof error === 'object' && error !== null) {
-          // Assuming error is an object with a property 'error' which itself has a property 'message'
-          this.loginError = (error as { error: { message: string } }).error.message;
-        } else {
-          this.loginError = 'An unknown error occurred';
+          this.loginSuccess = '';
         }
-
-        this.loginSuccess = null;
-      }
+      });
     }
   }
 }

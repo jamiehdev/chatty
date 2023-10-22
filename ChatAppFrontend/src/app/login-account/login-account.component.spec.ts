@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/consistent-type-imports */
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LoginAccountComponent } from './login-account.component';
